@@ -1,36 +1,43 @@
 import "./App.css";
 import { useEffect } from 'react'
-import { Observable } from "../rxjs";
+import { of , from} from "../rxjs";
+// import { of, from } from 'rxjs'
 
-const start = () => {
-  const observable = new Observable((subscriber) => {
-    subscriber.next(1);
-    subscriber.next(2);
-    subscriber.next(3);
-    setTimeout(() => {
-      subscriber.next(4);
-      subscriber.complete();
-    }, 1000);
-  });
-
-  console.log("just before subscribe");
+const ofStart = () => {
+  const observable = of(1, 2, 3);
   observable.subscribe({
-    next(x) {
-      console.log("got value " + x);
+    next: (value) => {
+      console.log(value);
     },
-    error(err) {
-      console.error("something wrong occurred: " + err);
+    error: (err) => {
+      console.log(err);
     },
-    complete() {
-      console.log("done");
-    },
+    complete: () => {
+      console.log('complete');
+    }
   });
-  console.log("just after subscribe");
+}
+
+const fromStart = () => {
+  const observable = from(Promise.resolve(1));
+  observable.subscribe({
+    next: (value) => {
+      console.log(value);
+    },
+    error: (err) => {
+      console.log(err);
+    },
+    complete: () => {
+      console.log('complete');
+    }
+  });
 }
 
 
+
 function App() {
-  useEffect(start, [])
+  useEffect(ofStart, [])
+  useEffect(fromStart, [])
 
   return (
     <>
