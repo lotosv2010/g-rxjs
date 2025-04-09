@@ -1,4 +1,5 @@
 import { Subscriber, ObserverType } from './Subscriber'
+import { pipeFromArray } from '../utils/pipe'
 
 export class Observable {
   private _subscribe!: (subscriber: Subscriber) => any;
@@ -19,7 +20,7 @@ export class Observable {
     }
     return subscriber;
   }
-  pipe(operation: (v: Observable) => Observable) {
-    return operation(this);
+  pipe(...operations: Array<(v: Observable) => Observable>): Observable {
+    return pipeFromArray(operations)(this);
   }
 }
