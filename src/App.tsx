@@ -1,19 +1,20 @@
 import "./App.css";
 import { useEffect } from 'react'
-import { fromEvent } from "../rxjs";
-// import { fromEvent } from 'rxjs'
+import { of, map, filter } from "../rxjs";
+// import { of, map, filter } from 'rxjs'
 
-const fromEventStart = () => {
-  const clicks = fromEvent(document, 'click');
-  const subscriber = clicks.subscribe(x => console.log(x, 'fromEvent'));
-  setTimeout(() => {
-    subscriber.unsubscribe();
-  }, 3000)
+const start = () => {
+  const observable = of(1, 2, 3, 4, 5)
+  observable
+    .pipe(map(x => x * 2)) // 2, 4, 6, 8, 10
+    .pipe(filter(x => x > 4)) // 6, 8, 10
+    .pipe(map(x => x + 1)) // 7, 9, 11
+    .subscribe(x => console.log(x))
 }
 
 
 function App() {
-  useEffect(fromEventStart, [])
+  useEffect(start, [])
 
   return (
     <>

@@ -19,4 +19,7 @@ export class Observable {
     }
     return subscriber;
   }
+  pipe(operation: (v: Observable) => Observable) {
+    return operation(this);
+  }
 }
