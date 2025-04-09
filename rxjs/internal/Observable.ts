@@ -2,9 +2,9 @@ import { Subscriber, ObserverType } from './Subscriber'
 import { pipeFromArray } from '../utils/pipe'
 
 export class Observable {
-  private _subscribe!: (subscriber: Subscriber) => any;
+  protected _subscribe!: (subscriber: Subscriber) => any;
 
-  constructor(subscribe: (subscriber: Subscriber) => void) {
+  constructor(subscribe?: (subscriber: Subscriber) => void) {
     if (subscribe) {
       this._subscribe = subscribe;
     }
