@@ -1,4 +1,5 @@
 import { isFunction } from '../utils/isFunction'
+import { Subscription } from './Subscription'
 
 export type Next = (value: any) => void;
 export interface ISubscriber {
@@ -9,10 +10,11 @@ export interface ISubscriber {
 
 export type ObserverType = ISubscriber | Next;
 
-export class Subscriber {
+export class Subscriber extends Subscription {
   private destination: ISubscriber;
   private isStopped = false;
   constructor(observerOrNext: ObserverType) {
+    super();
     const observer =
       isFunction(observerOrNext) ? { next: observerOrNext } : observerOrNext;
     this.destination = observer as ISubscriber;

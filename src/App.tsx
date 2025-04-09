@@ -1,43 +1,19 @@
 import "./App.css";
 import { useEffect } from 'react'
-import { of , from} from "../rxjs";
-// import { of, from } from 'rxjs'
+import { fromEvent } from "../rxjs";
+// import { fromEvent } from 'rxjs'
 
-const ofStart = () => {
-  const observable = of(1, 2, 3);
-  observable.subscribe({
-    next: (value) => {
-      console.log(value);
-    },
-    error: (err) => {
-      console.log(err);
-    },
-    complete: () => {
-      console.log('complete');
-    }
-  });
+const fromEventStart = () => {
+  const clicks = fromEvent(document, 'click');
+  const subscriber = clicks.subscribe(x => console.log(x, 'fromEvent'));
+  setTimeout(() => {
+    subscriber.unsubscribe();
+  }, 3000)
 }
-
-const fromStart = () => {
-  const observable = from(Promise.resolve(1));
-  observable.subscribe({
-    next: (value) => {
-      console.log(value);
-    },
-    error: (err) => {
-      console.log(err);
-    },
-    complete: () => {
-      console.log('complete');
-    }
-  });
-}
-
 
 
 function App() {
-  useEffect(ofStart, [])
-  useEffect(fromStart, [])
+  useEffect(fromEventStart, [])
 
   return (
     <>
