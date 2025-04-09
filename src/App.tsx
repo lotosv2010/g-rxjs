@@ -1,11 +1,10 @@
 import "./App.css";
 import { useEffect } from 'react'
-import { timer, interval } from "../rxjs";
-// import { timer, interval } from 'rxjs'
+import { take, interval } from "../rxjs";
+// import { take, interval } from 'rxjs'
 
 const start = () => {
-  timer(1000).subscribe(console.log)
-  interval(1000).subscribe(console.log)
+  interval(1000).pipe(take(5)).subscribe(console.log)
 }
 
 
